@@ -148,6 +148,18 @@ gamma.min = subset(gamma.fit,
 holtWinter_model_calibrado = HoltWinters(data_ts_treino, alpha =alpha.min[1,1], beta = beta.min[1,1], gamma = gamma.min[1,1])
 plot(holtWinter_model_calibrado)
 
+calc_mape<-function(x,y){
+  
+  dataf = cbind(x, y)
+  dataf = as.data.frame(dataf)
+  dataf$difabs = abs(dataf[,1] - dataf[,2])
+  dataf$mape_perc = dataf$difabs/dataf[,1]*100
+  dataf$mape_medio = mean(dataf$mape_perc)
+  
+  return(dataf)
+  
+}
+
 
 previsaoh_calibrado = predict(holtWinter_model_calibrado, n.ahead =  6)
 
